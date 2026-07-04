@@ -57,8 +57,8 @@ The extension uses **your own API key** — you stay in full control of usage an
 2. Pick your **Provider**: OpenAI or Anthropic.
 3. Paste your **API key** and hit **Test** to confirm it works.
 4. Choose a **model**:
-   - OpenAI — `gpt-4o-mini` (fast/cheap) or `gpt-4o`
-   - Anthropic — `claude-haiku-4-5` (fast/cheap) or `claude-sonnet-4-6`
+   - OpenAI — `gpt-5.5` or any available model
+   - Anthropic — `claude-sonnet-5` or any available model
 5. Pick your **explanation language** (see below).
 6. **Save.** You're ready to demystify. 🎉
 
@@ -90,7 +90,7 @@ Full details in [PRIVACY.md](PRIVACY.md).
 No build step, no npm — it's plain ES2022 + HTML + CSS.
 
 ```bash
-git clone https://github.com/havrashenko/chrome-explanator.git
+git clone git@github.com:ts-pro/demystify-ai.git
 ```
 
 1. Open `chrome://extensions`.
