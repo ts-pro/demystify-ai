@@ -57,13 +57,27 @@ chrome.action.onClicked.addListener(() => {
 });
 
 // T006: Context menu click handler — send selected text to content script
-chrome.contextMenus.onClicked.addListener((info, tab) => {
+chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId !== 'explain-selection') return;
+  if (!tab?.id) return;
+
+  // On-demand injection: the context-menu click is a user gesture, which grants activeTab
+  // access to this tab. This lets us drop the broad <all_urls> content script from the
+  // manifest — no broad host permissions requested, faster store review.
+  try {
+    await chrome.scripting.executeScript({
+      target: { tabId: tab.id, frameIds: [info.frameId ?? 0] },
+      files: ['content.js'],
+    });
+  } catch {
+    return; // Can't inject here (e.g. chrome:// pages, the Web Store, or the PDF viewer)
+  }
+
   chrome.tabs.sendMessage(
     tab.id,
     { type: 'SHOW_POPUP', selectedText: info.selectionText },
     { frameId: info.frameId }
-  ).catch(() => {}); // content script absent — tab needs a refresh after extension reload
+  ).catch(() => {});
 });
 
 // T012: Render prompt template by substituting variables

@@ -1,4 +1,10 @@
 // content.js — Chrome Explanator content script
+// Injected on demand via chrome.scripting.executeScript (activeTab) each time the user
+// invokes the context menu. Guard against re-initialization so repeated injections on the
+// same page don't create duplicate popup hosts or stack duplicate message listeners.
+(function initDemystifyAI() {
+if (window.__demystifyAIInitialized) return;
+window.__demystifyAIInitialized = true;
 
 // T007: Extract surrounding context from the page relative to the selection anchor
 function extractContext(anchorNode) {
@@ -344,3 +350,4 @@ chrome.runtime.onMessage.addListener((msg) => {
       showError('Could not reach AI — check your connection', savedRect);
     });
 });
+})();

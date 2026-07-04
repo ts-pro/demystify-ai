@@ -3,17 +3,12 @@
   "name": "Demystify AI",
   "version": "1.0.0",
   "description": "Explain and simplify selected text using OpenAI or Anthropic AI, with per-term tooltips and your choice of 12 languages.",
-  "permissions": ["contextMenus", "storage", "activeTab"],
+  "permissions": ["contextMenus", "storage", "activeTab", "scripting"],
   "host_permissions": [
     "https://api.openai.com/*",
     "https://api.anthropic.com/*"
   ],
   "background": { "service_worker": "background.js", "type": "module" },
-  "content_scripts": [{
-    "matches": ["<all_urls>"],
-    "js": ["content.js"],
-    "run_at": "document_idle"
-  }],
   "action": { "default_icon": "icons/icon-48.png" },
   "options_ui": { "page": "options.html", "open_in_tab": true },
   "web_accessible_resources": [
