@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demystify AI — Settings</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      background: #f5f5f5;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 16px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      padding: 32px;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: #111;
+    }
+
+    .section {
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #666;
+      margin-bottom: 12px;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: #444;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .input-row input,
+    .input-row select {
+      flex: 1;
+      min-width: 0;
+    }
+
+    input[type="password"],
+    select {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #d0d0d0;
+      border-radius: 5px;
+      font-size: 14px;
+      color: #333;
+      background: #fff;
+      transition: border-color 0.15s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23666' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+    }
+
+    input[type="password"]:focus,
+    select:focus {
+      outline: none;
+      border-color: #4a90e2;
+      box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
+    }
+
+    .btn-secondary {
+      padding: 8px 12px;
+      background: #f0f0f0;
+      color: #444;
+      border: 1px solid #d0d0d0;
+      border-radius: 5px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+
+    .btn-secondary:hover { background: #e4e4e4; }
+    .btn-secondary:active { background: #d8d8d8; }
+    .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .key-status {
+      margin-top: 5px;
+      font-size: 12px;
+      min-height: 16px;
+    }
+
+    .key-status.ok { color: #2e7d32; }
+    .key-status.err { color: #c0392b; }
+    .key-status.pending { color: #888; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #eee;
+      margin: 24px 0;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    #save-btn {
+      padding: 9px 24px;
+      background: #4a90e2;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    #save-btn:hover { background: #357abd; }
+    #save-btn:active { background: #2a6099; }
+
+    .section-desc {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 12px;
+    }
+
+    .terms-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .term-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #f0f4ff;
+      border: 1px solid #c5d5f5;
+      border-radius: 20px;
+      padding: 4px 10px 4px 12px;
+      font-size: 13px;
+      color: #2a4a9a;
+    }
+
+    .term-remove {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      color: #7a9ad0;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .term-remove:hover { color: #c0392b; }
+
+    .terms-empty {
+      font-size: 13px;
+      color: #aaa;
+    }
+
+    #status {
+      font-size: 13px;
+      color: #2e7d32;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Demystify AI Settings</h1>
+
+    <div class="section">
+      <div class="section-title">Active Provider</div>
+      <div class="field">
+        <label for="provider">Provider</label>
+        <select id="provider">
+          <option value="openai">OpenAI</option>
+          <option value="anthropic">Anthropic</option>
+        </select>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+      <div class="section-title">OpenAI</div>
+      <div class="field">
+        <label for="openai-key">API Key</label>
+        <div class="input-row">
+          <input type="password" id="openai-key" placeholder="sk-…" autocomplete="off">
+          <button class="btn-secondary" id="openai-test-btn">Test</button>
+        </div>
+        <div class="key-status" id="openai-key-status"></div>
+      </div>
+      <div class="field">
+        <label for="openai-model">Model</label>
+        <div class="input-row">
+          <select id="openai-model">
+            <option value="gpt-4o-mini">gpt-4o-mini</option>
+            <option value="gpt-4o">gpt-4o</option>
+          </select>
+          <button class="btn-secondary" id="openai-refresh-btn">↻ Refresh</button>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+      <div class="section-title">Anthropic</div>
+      <div class="field">
+        <label for="anthropic-key">API Key</label>
+        <div class="input-row">
+          <input type="password" id="anthropic-key" placeholder="sk-ant-…" autocomplete="off">
+          <button class="btn-secondary" id="anthropic-test-btn">Test</button>
+        </div>
+        <div class="key-status" id="anthropic-key-status"></div>
+      </div>
+      <div class="field">
+        <label for="anthropic-model">Model</label>
+        <div class="input-row">
+          <select id="anthropic-model">
+            <option value="claude-haiku-4-5-20251001">claude-haiku-4-5-20251001</option>
+            <option value="claude-sonnet-4-6">claude-sonnet-4-6</option>
+          </select>
+          <button class="btn-secondary" id="anthropic-refresh-btn">↻ Refresh</button>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+      <div class="section-title">Explanation Language</div>
+      <div class="field">
+        <label for="language">Respond in</label>
+        <select id="language">
+          <option value="auto">Same as post (auto-detect)</option>
+          <option value="en">English</option>
+          <option value="uk">Ukrainian</option>
+          <option value="es">Spanish</option>
+          <option value="fr">French</option>
+          <option value="de">German</option>
+          <option value="pl">Polish</option>
+          <option value="pt">Portuguese</option>
+          <option value="zh">Chinese (Simplified)</option>
+          <option value="ja">Japanese</option>
+          <option value="ar">Arabic</option>
+          <option value="it">Italian</option>
+        </select>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+      <div class="section-title">Known Terms</div>
+      <p class="section-desc">The AI will not explain these terms in detail. Right-click any selection → "Mark as known" to add.</p>
+      <div id="known-terms-list" class="terms-list"></div>
+      <p id="known-terms-empty" class="terms-empty" style="display:none">No known terms yet.</p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="actions">
+      <button id="save-btn">Save</button>
+      <div id="status"></div>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
